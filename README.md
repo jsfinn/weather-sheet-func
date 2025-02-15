@@ -1,11 +1,12 @@
-# Google Sheets Weather Function
+# Weather Sheets Function
 
-A custom Google Sheets function that retrieves average temperatures between two dates for a given ZIP code using the Visual Crossing Weather API.
+A custom Google Sheets function that retrieves and caches average temperatures between two dates for a given ZIP code using the Visual Crossing Weather API.
 
 ## Features
 
 - Custom function `GETAVGTEMP()` that returns the average temperature for a ZIP code between two dates
 - Uses Visual Crossing Weather API for reliable historical weather data
+- Caches results using Script Properties to minimize API calls
 - Returns temperatures in Fahrenheit
 - Handles error cases gracefully
 
@@ -22,18 +23,19 @@ A custom Google Sheets function that retrieves average temperatures between two 
 ## Setup
 
 1. Clone this repository
-2. Open `Code.gs` and add your Visual Crossing API key:
-   ```javascript
-   const VISUALCROSSING_API_KEY = 'your-api-key-here';
+2. Create `.clasp.json` with your Script ID:
+   ```json
+   {
+       "scriptId": "your-script-id-here",
+       "rootDir": "./"
+   }
    ```
-3. Push the code to Google Apps Script:
-   ```bash
-   clasp push
-   ```
-4. Deploy the project:
-   ```bash
-   clasp deploy
-   ```
+3. Add your Visual Crossing API key in the Script Properties:
+   - Open Script Editor (Extensions > Apps Script)
+   - Go to Project Settings
+   - Under 'Script Properties', add:
+     - Property: `VISUALCROSSING_API_KEY`
+     - Value: `your-api-key-here`
 
 ## Usage in Google Sheets
 

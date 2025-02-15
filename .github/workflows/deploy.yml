@@ -1,0 +1,41 @@
+name: Deploy Google Apps Script
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install Clasp
+        run: npm install -g @google/clasp
+          
+      - name: Create clasp config
+        run: |
+          echo '{"scriptId":"${{ secrets.SCRIPT_ID }}"}' > .clasp.json
+          
+      - name: Update API key
+        run: |
+          sed -i 's/const VISUALCROSSING_API_KEY = .*/const VISUALCROSSING_API_KEY = "${{ secrets.VISUALCROSSING_API_KEY }}";/' Code.gs
+          
+      - name: Authenticate with Google
+        run: |
+          echo '${{ secrets.CLASPRC_JSON }}' > ~/.clasprc.json
+          
+      - name: Deploy Script
+        run: clasp push
+
+      - name: Deployment Status
+        run: |
+          echo "✅ Deployment completed"
+          echo "Script ID: ${{ secrets.SCRIPT_ID }}"
+          date 
