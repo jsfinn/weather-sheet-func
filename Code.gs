@@ -2,7 +2,7 @@ const VISUALCROSSING_API_KEY = '<API_KEY>';
 const BASE_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline';
 
 /**
- * Gets average temperature between two dates for a ZIP code
+ * Gets average temperature between two dates for a ZIP code.
  *
  * @param {string} zipCode The ZIP code to get temperature data for
  * @param {Date} startDate The start date
